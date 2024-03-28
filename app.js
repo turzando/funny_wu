@@ -10,11 +10,11 @@ app.get('/health', (req, res) => {
 
 app.get('/', async (req, res) => {
     const limit = req.query.limit || 2
-    const offset = req.query.offset || 0
-    const page = limit * offset
+    const page = req.query.page || 1
+    const offset = limit * (page - 1)
     const limitForNextPage = Number(limit) + 1
 
-    const result = await client.query(`select * from persons order by id limit ${limitForNextPage} offset ${page}`)
+    const result = await client.query(`select * from persons order by id limit ${limitForNextPage} offset ${offset}`)
 
     let hasNext = false
 
