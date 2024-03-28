@@ -3,6 +3,15 @@ const app = express()
 const port = 8080
 const { client } = require('./repository')
 
+const server = app.listen(port, () => {
+    console.log(`App listeing on port ${port}`)
+})
+
+//TODO helthCheck
+//Graceful Shutdown
+//Multi stage
+//License ???
+//Students
 
 app.get('/health', (req, res) => {
     res.send("ok")
@@ -28,6 +37,13 @@ app.get('/', async (req, res) => {
     })
 })
 
-app.listen(port, () => {
-    console.log(`App listeing on port ${port}`)
+process.on('SIGTERM', () => {
+    console.info('SIGTERM signal received')
+    console.log('Closing http server')
+    server.close(() => {
+        console.log('HTTP server closed')
+        client.end()
+        console.log('DB connection closed')
+        process.exit()
+    })
 })
