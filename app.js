@@ -4,6 +4,10 @@ const port = 8080
 const { client } = require('./repository')
 
 
+app.get('/health', (req, res) => {
+    res.send("ok")
+})
+
 app.get('/', async (req, res) => {
     const limit = req.query.limit || 2
     const offset = req.query.offset || 0
