@@ -1,17 +1,9 @@
 const express = require('express')
 const app = express()
 const port = 8080
-const { client } = require('./repository')
+// const { client } = require('./repository')
 
-const server = app.listen(port, () => {
-    console.log(`App listeing on port ${port}`)
-})
-
-//TODO helthCheck
-//Graceful Shutdown
-//Multi stage
-//License ???
-//Students
+let server
 
 app.get('/health', (req, res) => {
     res.send("ok")
@@ -47,3 +39,5 @@ process.on('SIGTERM', () => {
         process.exit()
     })
 })
+
+module.exports = app
