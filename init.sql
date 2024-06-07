@@ -17,6 +17,9 @@ CREATE TABLE IF NOT EXISTS subjects (
     name VARCHAR(255) NOT NULL
 );
 
+
+
+
 CREATE TABLE IF NOT EXISTS classes (
     class_id SERIAL PRIMARY KEY,
     subject_id INT NOT NULL,
@@ -40,9 +43,9 @@ CREATE TABLE IF NOT EXISTS enrollments (
 CREATE TABLE IF NOT EXISTS grades (
     grade_id SERIAL PRIMARY KEY,
     enrollment_id INT NOT NULL,
-    first_gradle DOUBLE PRECISION,
-    second_gradle DOUBLE PRECISION,
-    recuperation_gradle DOUBLE PRECISION,
+    first_grade DOUBLE PRECISION,
+    second_grade DOUBLE PRECISION,
+    recuperation_grade DOUBLE PRECISION,
     evaluation_date DATE NOT NULL,
     FOREIGN KEY (enrollment_id) REFERENCES enrollments(enrollment_id)
 );
@@ -53,3 +56,15 @@ VALUES ('Artur Silva', 'Artur', 'Silva', 'turzando', 'artur@gmail.com', 'STUDENT
 
 INSERT INTO PERSONS (full_name, first_name, last_name, username, email, role, password, birth_date)
 VALUES ('Tony Silva', 'Tony', 'Silva', 'tony2ponto0', 'tony@gmail.com', 'TEACHER', '123', '2001-07-04');
+
+INSERT INTO subjects (name) 
+VALUES ('matematica');
+
+INSERT INTO classes (subject_id, teacher_id, academic_year, shift, description) 
+VALUES (1, 2, 2024, 'MORNING', '1A');
+
+INSERT INTO enrollments(student_id, class_id, enrollment_date)
+VALUES (1, 1, '2024-07-06');
+
+INSERT INTO grades (enrollment_id, first_grade, second_grade, evaluation_date)
+values (1, 10, 9, '2024-07-06');

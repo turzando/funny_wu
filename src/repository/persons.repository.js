@@ -10,7 +10,8 @@ class PersonRepository {
     }
 
     async getAllPersonsByRole(role) {
-        const result = await this.db.query(`SELECT * FROM persons where role = '${role}'`)
+        const result = await this.db.query(`SELECT * FROM persons as p INNER JOIN enrollments as e
+            on person_id = student_id where role = '${role}' `)
         return result.rows
     }
 
