@@ -17,9 +17,6 @@ CREATE TABLE IF NOT EXISTS subjects (
     name VARCHAR(255) NOT NULL
 );
 
-
-
-
 CREATE TABLE IF NOT EXISTS classes (
     class_id SERIAL PRIMARY KEY,
     subject_id INT NOT NULL,
@@ -40,14 +37,25 @@ CREATE TABLE IF NOT EXISTS enrollments (
     FOREIGN KEY (class_id) REFERENCES classes(class_id)
 );
 
+CREATE TABLE IF NOT EXISTS class_subjects (
+    class_subject_id SERIAL PRIMARY KEY,
+    class_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id),
+    FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
+);
+
 CREATE TABLE IF NOT EXISTS grades (
     grade_id SERIAL PRIMARY KEY,
     enrollment_id INT NOT NULL,
+    subject_id INT NOT NULL,
     first_grade DOUBLE PRECISION,
     second_grade DOUBLE PRECISION,
     recuperation_grade DOUBLE PRECISION,
     evaluation_date DATE NOT NULL,
-    FOREIGN KEY (enrollment_id) REFERENCES enrollments(enrollment_id)
+    FOREIGN KEY (enrollment_id) REFERENCES enrollments(enrollment_id),
+    FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
+
 );
 
 INSERT INTO PERSONS (full_name, first_name, last_name, username, email, role, password, birth_date)
@@ -66,5 +74,8 @@ VALUES (1, 2, 2024, 'MORNING', '1A');
 INSERT INTO enrollments(student_id, class_id, enrollment_date)
 VALUES (1, 1, '2024-07-06');
 
-INSERT INTO grades (enrollment_id, first_grade, second_grade, evaluation_date)
-values (1, 10, 9, '2024-07-06');
+INSERT INTO class_subjects(class_id, subject_id) 
+VALUES (1, 1);
+
+INSERT INTO grades (enrollment_id, subject_id, first_grade, second_grade, evaluation_date)
+values (1, 1, 10, 9, '2024-07-06');
